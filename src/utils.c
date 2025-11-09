@@ -3,21 +3,24 @@
 
 void print_logo()
 {
-    printk("\t                                                         \n");
-    printk("\t  _____        _                           ____    _____ \n");
-    printk("\t |  __ \\      (_)                         / __ \\  / ____|\n");
-    printk("\t | |__) |_ __  _  _ __ ___   _   _  ___  | |  | || (___  \n");
-    printk("\t |  ___/| '__|| || '_ ` _ \\ | | | |/ __| | |  | | \\___ \\ \n");
-    printk("\t | |    | |   | || | | | | || |_| |\\__ \\ | |__| | ____) |\n");
-    printk("\t |_|    |_|   |_||_| |_| |_| \\__,_||___/  \\____/ |_____/ \n");
-    printk("\t                                                         \n");
-    printk("\t                                                         \n");
+    printk("\t                                          \n");
+    printk("\t\t\t\t   _____                     ____    _____ \n");
+    printk("\t\t\t\t  / ____|                   / __ \\  / ____|\n");
+    printk("\t\t\t\t | |      ___   _ __   ___ | |  | || (___  \n");
+    printk("\t\t\t\t | |     / _ \\ | '__| / _ \\| |  | | \\___ \\ \n");
+    printk("\t\t\t\t | |____| (_) || |   |  __/| |__| | ____) |\n");
+    printk("\t\t\t\t  \\_____|\\___/ |_|    \\___| \\____/ |_____/ \n");
+    printk("\t                                          \n");
 }
 
 void about(char *version)
 {
-    printk("\n\tPrimusOS - v%s - A simple 32-bit Ring 0 operating system", version);
+    printk("\n\tCoreOS - v%s - A simple 32-bit Ring 0 operating system", version);
     printk("\n\tProvided under the GNU General Public License v3.0");
-    printk("\n\tInspired by Terry A. Davis (in memoriam)");
-    printk("\n\tGitHub repository: https://github.com/araujo88/primus-os\n");
+    printk("\n\tCreated by: Saad Ali, Ghazanfar Pasha & Roshaan Idrees");
+    printk("\n\tGitHub repository: https://github.com/Teams-Workspace/CoreOS");
+    printk("\n\tContributors:");
+    printk("\n\t-> https://github.com/0X1Saad");
+    printk("\n\t-> https://github.com/itsmesaadali");
+    printk("\n");
 }

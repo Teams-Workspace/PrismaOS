@@ -7,11 +7,9 @@
     .long FLAGS
     .long CHECKSUM
 
-
 .section .text
 .extern main
 .global loader
-
 
 loader:
     mov $kernel_stack, %esp
@@ -19,13 +17,13 @@ loader:
     push %ebx
     call main
 
-
 _stop:
     cli
     hlt
     jmp _stop
 
-
 .section .bss
-.space 2*1024*1024; # 2 MiB
+.space 2*1024*1024   # 2 MiB stack space
 kernel_stack:
+
+.section .note.GNU-stack,"",@progbits

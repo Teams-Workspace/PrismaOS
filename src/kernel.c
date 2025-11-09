@@ -351,3 +351,80 @@ int main(void)
 	}
 	return 0;
 }
+
+
+// Summary of main.c
+
+// 1. Purpose
+
+// This is the main entry point of your OS kernel shell.
+
+// It initializes the terminal, prints the logo and OS info, and starts an interactive command loop.
+
+// 2. Global Variables and Settings
+
+// numlock, capslock, scrolllock, shift: Keyboard state flags.
+
+// current_version: Stores the OS version as a string.
+
+// BUFFER_SIZE: Maximum command input length (1024 bytes).
+
+// 3. Initialization
+
+// Terminal is initialized with default colors (terminal_initialize).
+
+// Logo is printed (print_logo()) and version info displayed (about(current_version)).
+
+// 4. Heap Initialization
+
+// Heap memory is initialized (heap_init()), enabling dynamic allocation.
+
+// 5. Debug Section (Optional)
+
+// If DEBUG is true, it runs memory allocation tests using kmalloc and kfree.
+
+// 6. Command Input Loop
+
+// Reads input from the keyboard (scan()).
+
+// Handles ENTER key to process commands.
+
+// Supports command history with linked list (insert_at_head and head).
+
+// Handles BACKSPACE and manages shift/capslock states for proper character input.
+
+// Supported Commands & Features
+
+// General commands: help, about, clear, fontcolor, datetime, date, clock, reboot, shutdown, history.
+
+// Fun commands: hello, why, joke, sing me a song, some responses to offensive/interactive inputs.
+
+// Cryptography utilities: sha224(string), sha256(string).
+
+// Math utilities: Built-in functions like rand, srand, sqrt, pow, sin, cos, tan, etc., and arithmetic computation via compute(buffer).
+
+// Easter eggs & custom responses: e.g., anime, personal questions, and interactive chatbot-like responses.
+
+// 7. Keyboard Handling
+
+// Processes each keypress, including shift and capslock mapping.
+
+// Converts keycodes to characters and updates the input buffer.
+
+// Properly moves the terminal cursor after every input.
+
+// 8. Version Handling
+
+// OS version is displayed on startup and stored in current_version, using macros from version.h (V1.V2.V3+1).
+
+// 9. Interactive Loop
+
+// Loops indefinitely (while(true)), continuously reading and processing commands.
+
+// Each command is parsed, executed, and the prompt is redisplayed.
+
+// 10. Error Handling
+
+// Unknown commands are reported back to the user:
+
+// '%s' is not a recognized command.
