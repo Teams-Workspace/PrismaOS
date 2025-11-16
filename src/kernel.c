@@ -284,9 +284,36 @@ int main(void)
 				}
 				else if (strlen(buffer) > 0 && strcmp(buffer, "scheduling") == 0)
 				{
-					fcfs();
+					int choice = 0;
+					while (true)
+					{
+						printk("\nCPU Scheduling Algorithms Menu:\n");
+						printk("1. First-Come-First-Served (FCFS)\n");
+						printk("2. Shortest Job First (SJF)\n");
+						printk("3. Back to main menu\n");
+						printk("Enter your choice (1-3): ");
+						choice = read_int();
+
+						if (choice == 1)
+						{
+							fcfs();
+						}
+						else if (choice == 2)
+						{
+							sjf();
+						}
+						else if (choice == 3)
+						{
+							break;
+						}
+						else
+						{
+							printk("Invalid choice! Please enter 1, 2, or 3.\n");
+						}
+					}
 				}
-				else if (strlen(buffer) > 0 && (strstr(buffer, "+") != NULL || strstr(buffer, "-") != NULL || strstr(buffer, "*") != NULL|| strstr(buffer, "/") != NULL ))
+
+				else if (strlen(buffer) > 0 && (strstr(buffer, "+") != NULL || strstr(buffer, "-") != NULL || strstr(buffer, "*") != NULL || strstr(buffer, "/") != NULL))
 				{
 					compute(buffer);
 				}
@@ -356,7 +383,6 @@ int main(void)
 	}
 	return 0;
 }
-
 
 // Summary of main.c
 

@@ -1,36 +1,156 @@
 #include "../include/tty.h"
 #include "../include/string.h"
 #include "../include/utils.h"
+#include "../include/cpu_utils.h"
 
 #define MAX_PROCESSES 10
 
-typedef struct {
-    int pid;
-    int burst_time;
-    int waiting_time;
-    int turnaround_time;
-} Process;
+// ---------------- FCFS Table ----------------
+void print_fcfs_table(Process proc[], int n)
+{
+    char buf[32];
+    int total_wt = 0, total_tt = 0;
+    int width_pid = strlen("Process");
+    int width_bt = strlen("Burst");
+    int width_wt = strlen("Waiting");
+    int width_tt = strlen("Turnaround");
 
-void fcfs() {
-    int n;
+    // Determine column widths dynamically
+    for (int i = 0; i < n; i++)
+    {
+        // PID
+        itoas(proc[i].pid, buf);
+        if (strlen(buf) > width_pid)
+            width_pid = strlen(buf);
+
+        // Burst
+        itoas(proc[i].burst_time, buf);
+        if (strlen(buf) > width_bt)
+            width_bt = strlen(buf);
+
+        // Waiting
+        itoas(proc[i].waiting_time, buf);
+        if (strlen(buf) > width_wt)
+            width_wt = strlen(buf);
+
+        // Turnaround
+        itoas(proc[i].turnaround_time, buf);
+        if (strlen(buf) > width_tt)
+            width_tt = strlen(buf);
+    }
+
+    // Top border
+    printk("+");
+    for (int i = 0; i < width_pid; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_bt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_wt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_tt; i++)
+        printk("-");
+    printk("+\n");
+
+    // Header
+    printk("|");
+    print_center("Process", width_pid);
+    printk("|");
+    print_center("Burst", width_bt);
+    printk("|");
+    print_center("Waiting", width_wt);
+    printk("|");
+    print_center("Turnaround", width_tt);
+    printk("|\n");
+
+    // Separator
+    printk("+");
+    for (int i = 0; i < width_pid; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_bt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_wt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_tt; i++)
+        printk("-");
+    printk("+\n");
+
+    // Table rows
+    for (int i = 0; i < n; i++)
+    {
+        printk("|");
+        itoas(proc[i].pid, buf);
+        print_center(buf, width_pid);
+
+        printk("|");
+        itoas(proc[i].burst_time, buf);
+        print_center(buf, width_bt);
+
+        printk("|");
+        itoas(proc[i].waiting_time, buf);
+        print_center(buf, width_wt);
+
+        printk("|");
+        itoas(proc[i].turnaround_time, buf);
+        print_center(buf, width_tt);
+
+        printk("|\n");
+
+        total_wt += proc[i].waiting_time;
+        total_tt += proc[i].turnaround_time;
+    }
+
+    // Bottom border
+    printk("+");
+    for (int i = 0; i < width_pid; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_bt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_wt; i++)
+        printk("-");
+    printk("+");
+    for (int i = 0; i < width_tt; i++)
+        printk("-");
+    printk("+\n");
+
+    // Averages
+    printk("Average Waiting Time   : ");
+    print_float((float)total_wt / n);
+    printk("\nAverage Turnaround Time: ");
+    print_float((float)total_tt / n);
+    printk("\n");
+}
+
+// ---------------- Main FCFS Function ----------------
+void fcfs()
+{
     Process proc[MAX_PROCESSES];
+    int n;
 
-    printk("\nEnter number of processes: ");
+    printk("Enter number of processes: ");
     n = read_int();
-
-    if (n <= 0 || n > MAX_PROCESSES) {
-        printk("\nInvalid number of processes!\n");
+    if (n <= 0 || n > MAX_PROCESSES)
+    {
+        printk("Invalid number of processes!\n");
         return;
     }
 
-    printk("\nEnter Burst Times:\n");
-    for (int i = 0; i < n; i++) {
+    // Input burst times
+    for (int i = 0; i < n; i++)
+    {
         proc[i].pid = i + 1;
-        printk("P%d: ", proc[i].pid);
+        printk("Enter burst time for P%d: ", proc[i].pid);
         proc[i].burst_time = read_int();
     }
 
-    // Calculate waiting & turnaround times
+    // Calculate waiting and turnaround times
     proc[0].waiting_time = 0;
     for (int i = 1; i < n; i++)
         proc[i].waiting_time = proc[i - 1].waiting_time + proc[i - 1].burst_time;
@@ -38,70 +158,11 @@ void fcfs() {
     for (int i = 0; i < n; i++)
         proc[i].turnaround_time = proc[i].waiting_time + proc[i].burst_time;
 
-    // Print process info table
-    printk("\nProcess | Burst | Waiting | Turnaround\n");
-    printk("--------------------------------------\n");
-    int total_wt = 0, total_tt = 0;
-    for (int i = 0; i < n; i++) {
-        printk("P%d\t  %d\t   %d\t   %d\n", proc[i].pid, proc[i].burst_time,
-               proc[i].waiting_time, proc[i].turnaround_time);
-        total_wt += proc[i].waiting_time;
-        total_tt += proc[i].turnaround_time;
-    }
+    // Print table
+    printk("\nFCFS Scheduling Table:\n");
+    print_fcfs_table(proc, n);
 
-    printk("\nAverage Waiting Time: %d", total_wt / n);
-    printk("\nAverage Turnaround Time: %d\n", total_tt / n);
-
-    // 🔹 Color Gantt Chart Visualization
-    printk("\nGantt Chart Visualization:\n\n");
-
-    int time = 0;
-
-    // Top border
-    printk("  ");
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < proc[i].burst_time; j++)
-            printk("--");
-        printk(" ");
-    }
-    printk("\n|");
-
-    // Process bars (colored)
-    for (int i = 0; i < n; i++) {
-        int color = (i % 6) + 1; // rotate colors
-        terminal_set_colors(color, COLOR_BLACK);
-        for (int j = 0; j < proc[i].burst_time; j++)
-            printk("██");  // visual filled bar
-        terminal_set_colors(COLOR_WHITE, COLOR_BLACK);
-        printk("|");
-    }
-
-    // Bottom border
-    printk("\n  ");
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < proc[i].burst_time; j++)
-            printk("--");
-        printk(" ");
-    }
-
-    // Process labels and time markings
-    printk("\n 0");
-    time = 0;
-    for (int i = 0; i < n; i++) {
-        time += proc[i].burst_time;
-        printk("  ");
-        for (int j = 0; j < proc[i].burst_time - 1; j++)
-            printk("  ");
-        printk("%d", time);
-    }
-
-    printk("\n\nLegend:\n");
-    for (int i = 0; i < n; i++) {
-        int color = (i % 6) + 1;
-        terminal_set_colors(color, COLOR_BLACK);
-        printk("██");
-        terminal_set_colors(COLOR_WHITE, COLOR_BLACK);
-        printk(" = P%d  ", proc[i].pid);
-    }
-    printk("\n");
+    // Print Gantt chart
+    printk("\nGantt Chart:\n");
+    print_gantt_chart_vga(proc, n);
 }
