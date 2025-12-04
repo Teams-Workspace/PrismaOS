@@ -2,7 +2,7 @@
 #define _VERSION_H 1
 
 #define V1 0
-#define V2 1
-#define V3 60
+#define V2 0
+#define V3 0
 
 #endif
