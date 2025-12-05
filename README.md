@@ -1,6 +1,6 @@
-# PrismaOS
+# CoreOS
 
-**PrismaOS** is a lightweight, 32-bit, ring-0 operating system written from scratch with a focus on education, experimentation, and fun. It features a custom shell, dynamic memory management, cryptography utilities, mathematical functions, and interactive commands, providing a foundation for building OS-level experiments and simulators.
+**CoreOS** is a lightweight, 32-bit, ring-0 operating system written from scratch with a focus on education, experimentation, and fun. It features a custom shell, dynamic memory management, cryptography utilities, mathematical functions, and interactive commands, providing a foundation for building OS-level experiments and simulators.
 
 ---
 
@@ -43,7 +43,7 @@
 
 ```bash
 git clone https://github.com/Teams-Workspace/PrismaOS.git
-cd PrismaOS
+cd CoreOS
 ```
 
 ### Contributors
