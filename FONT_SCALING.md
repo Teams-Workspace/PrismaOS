@@ -1,7 +1,7 @@
 # Font Scaling Feature
 
 ## Overview
-PrismaOS now includes dynamic font size adjustment commands, similar to Arch Linux terminal font scaling.
+CoreOS now includes dynamic font size adjustment commands, similar to Arch Linux terminal font scaling.
 
 ## Commands
 
@@ -20,10 +20,10 @@ Decreases the font size by adjusting the VGA text mode scan lines.
 Type the command in the PrismaOS shell:
 
 ```
-PrimusOS> fontsize+
+CoreOS> fontsize+
 Font size: Large
 
-PrimusOS> fontsize-
+CoreOS> fontsize-
 Font size: Normal
 ```
 
